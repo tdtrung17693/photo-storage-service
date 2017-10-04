@@ -2,21 +2,117 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="/socket.io/socket.io-client.js"></script>
-    <script>
-        $(function () {
-            let io = new io();
 
-            io.on('sendfile')
-        });
-    </script>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <form action="" method="post" encType="multipart/form-data">
-      <input type="file" name="photo">
-      <input type="submit" value="Upload">
-    </form>
+    <div class="container">
+      <div class="row">
+        <div class="col d-flex justify-content-center">
+          <h1 class="text-center"><%= title %></h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col d-flex justify-content-center">
+          <video width="640" height="480" id="video" style="margin: auto;"></video>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col d-flex flex-column justify-content-center">
+          <button type="button" class="btn btn-primary" id="submitBtn">Do Attendance</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="cameraPreviewModal" tabindex="-1" role="dialog" aria-labelledby="cameraPreviewLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cameraPreviewLabel">Preview</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <canvas id="videoCaptured" width="640" height="480" style="width: 100%;"></canvas>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary btn-attendance">Do Attendance</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Javascripts -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <script>
+        (function (window) {
+          let canvas = document.getElementById('videoCaptured');
+          let ctx = canvas.getContext('2d');
+          let video = document.getElementById('video');
+          let cameraStream;
+
+          initCamera();
+          initEvent();
+
+          function initCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                    cameraStream = stream.getTracks()[0];
+                });
+            }
+          }
+
+          function initEvent() {
+            let submitBtn = document.getElementById('submitBtn');
+            let attendanceBtn = document.getElementsByClassName('btn-attendance')[0];
+
+            submitBtn.addEventListener("click", event => {
+              captureFrame();
+
+              $('#cameraPreviewModal').modal('show')
+            });
+
+            attendanceBtn.addEventListener("click", event => {
+              let dataUrl = canvas.toDataURL();
+              let data = canvas.toDataURL("image/jpg", 1.0);
+
+              canvas.toBlob(blob => {
+                let file = new File([blob], "employee.jpg", { type: "image/jpeg" });
+                let formData = new FormData();
+
+                formData.append('photo', file);
+
+                $.ajax({
+                  type: "POST",
+                  url: "http://localhost:5001/attendance",
+                  data: formData,
+                  contentType: false,
+                  processData: false,
+                }).done(function(o) {
+                  console.log(o);
+                  // If you want the file to be visible in the browser
+                  // - please modify the callback in javascript. All you
+                  // need is to return the url to the file, you just saved
+                  // and than put the image in your browser.
+                });
+              })
+            });
+          }
+
+          function captureFrame() {
+            ctx.drawImage(video, 0, 0, 640, 480);
+          }
+        })(window);
+    </script>
   </body>
 </html>

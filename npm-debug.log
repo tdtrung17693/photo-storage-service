@@ -1,0 +1,46 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'run', 'start:debug' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.1
+4 verbose run-script [ 'prestart:debug', 'start:debug', 'poststart:debug' ]
+5 info lifecycle photo-storage-service@0.0.0~prestart:debug: photo-storage-service@0.0.0
+6 silly lifecycle photo-storage-service@0.0.0~prestart:debug: no script for prestart:debug, continuing
+7 info lifecycle photo-storage-service@0.0.0~start:debug: photo-storage-service@0.0.0
+8 verbose lifecycle photo-storage-service@0.0.0~start:debug: unsafe-perm in lifecycle true
+9 verbose lifecycle photo-storage-service@0.0.0~start:debug: PATH: /usr/lib/node_modules/npm/bin/node-gyp-bin:/media/Data/Code/photo-storage-service/node_modules/.bin:/home/tdtrung17693/.rbenv/shims:/home/tdtrung17693/.rbenv/bin:/usr/local/bin:/usr/local/sbin:/usr/lib64/qt-3.3/bin:/usr/bin:/bin:/home/tdtrung17693/bin:/usr/sbin:/home/tdtrung17693/.fzf/bin
+10 verbose lifecycle photo-storage-service@0.0.0~start:debug: CWD: /media/Data/Code/photo-storage-service
+11 silly lifecycle photo-storage-service@0.0.0~start:debug: Args: [ '-c',
+11 silly lifecycle   'DEBUG=\'photo-storage-service:server,photo-storage-service:socket-io\' node -r @std/esm ./bin/www' ]
+12 silly lifecycle photo-storage-service@0.0.0~start:debug: Returned: code: 1  signal: null
+13 info lifecycle photo-storage-service@0.0.0~start:debug: Failed to exec start:debug script
+14 verbose stack Error: photo-storage-service@0.0.0 start:debug: `DEBUG='photo-storage-service:server,photo-storage-service:socket-io' node -r @std/esm ./bin/www`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (/usr/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at EventEmitter.emit (events.js:191:7)
+14 verbose stack     at ChildProcess.<anonymous> (/usr/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at ChildProcess.emit (events.js:191:7)
+14 verbose stack     at maybeClose (internal/child_process.js:891:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
+15 verbose pkgid photo-storage-service@0.0.0
+16 verbose cwd /media/Data/Code/photo-storage-service
+17 error Linux 4.8.6-300.fc25.x86_64
+18 error argv "/usr/bin/node" "/usr/bin/npm" "run" "start:debug"
+19 error node v6.11.1
+20 error npm  v3.10.10
+21 error code ELIFECYCLE
+22 error photo-storage-service@0.0.0 start:debug: `DEBUG='photo-storage-service:server,photo-storage-service:socket-io' node -r @std/esm ./bin/www`
+22 error Exit status 1
+23 error Failed at the photo-storage-service@0.0.0 start:debug script 'DEBUG='photo-storage-service:server,photo-storage-service:socket-io' node -r @std/esm ./bin/www'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the photo-storage-service package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     DEBUG='photo-storage-service:server,photo-storage-service:socket-io' node -r @std/esm ./bin/www
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs photo-storage-service
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls photo-storage-service
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
